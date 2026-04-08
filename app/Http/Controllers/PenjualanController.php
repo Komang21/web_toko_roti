@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Penjualan;
-use App\Models\PenjualanDetail;
-use App\Models\Produk;
+use App\Models\admin\Penjualan;
+use App\Models\admin\PenjualanDetail;
+use App\Models\admin\Produk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

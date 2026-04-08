@@ -11,9 +11,24 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('supplier.index')" :active="request()->routeIs('supplier*')">
+                        {{ __('Supplier') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('produk.index')" :active="request()->routeIs('produk*')">
+                        {{ __('Produk') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('bahan-baku.index')" :active="request()->routeIs('bahan-baku*')">
+                        {{ __('Bahan Baku') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pembelian.index')" :active="request()->routeIs('pembelian*')">
+                        {{ __('Pembelian') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('penjualan.index')" :active="request()->routeIs('penjualan*')">
+                        {{ __('Penjualan') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -98,3 +113,22 @@
         </div>
     </div>
 </nav>
+
+<script>
+function togglePassword() {
+    var password = document.getElementById('password');
+    var eyeIcon = document.getElementById('eye-icon');
+    var eyeSlashIcon = document.getElementById('eye-slash-icon');
+    
+    if (password.type === 'password') {
+        password.type = 'text';
+        eyeIcon.classList.add('hidden');
+        eyeSlashIcon.classList.remove('hidden');
+    } else {
+        password.type = 'password';
+        eyeIcon.classList.remove('hidden');
+        eyeSlashIcon.classList.add('hidden');
+    }
+}
+</script>
+

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +18,6 @@ class Penjualan extends Model
 
     public function details()
     {
-        return $this->hasMany(PenjualanDetail::class);
+        return $this->hasMany(\App\Models\admin\PenjualanDetail::class);
     }
 }

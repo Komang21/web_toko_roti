@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\PembelianDetail;
@@ -21,7 +21,7 @@ class Pembelian extends Model
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(\App\Models\admin\Supplier::class);
     }
 
     public function details()

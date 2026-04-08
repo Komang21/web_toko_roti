@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pembelian;
-use App\Models\PembelianDetail;
-use App\Models\BahanBaku;
-use App\Models\Supplier;
+use App\Models\admin\Pembelian;
+use App\Models\admin\PembelianDetail;
+use App\Models\admin\BahanBaku;
+use App\Models\admin\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 

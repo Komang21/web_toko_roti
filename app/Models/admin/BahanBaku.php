@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
 
 class BahanBaku extends Model
 {
+
+protected $table = 'bahan_bakus';
+
     protected $fillable = [
         'nama',
         'stok',
@@ -25,6 +28,6 @@ class BahanBaku extends Model
 
     public function pembelianDetails()
     {
-        return $this->hasMany(PembelianDetail::class, 'bahan_id');
+        return $this->hasMany(\App\Models\admin\PembelianDetail::class, 'bahan_id');
     }
 }

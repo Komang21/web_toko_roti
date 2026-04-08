@@ -12,6 +12,14 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::resource('produk', \App\Http\Controllers\ProdukController::class);
+    Route::resource('supplier', \App\Http\Controllers\SupplierController::class);
+    Route::resource('bahan-baku', \App\Http\Controllers\BahanBakuController::class);
+    Route::resource('pembelian', \App\Http\Controllers\PembelianController::class);
+    Route::resource('penjualan', \App\Http\Controllers\PenjualanController::class);
+});
+
+Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

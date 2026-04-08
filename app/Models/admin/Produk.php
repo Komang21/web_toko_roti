@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\PenjualanDetail;
@@ -20,6 +20,6 @@ class Produk extends Model
 
     public function penjualanDetails()
     {
-        return $this->hasMany(PenjualanDetail::class, 'produk_id');
+        return $this->hasMany(\App\Models\admin\PenjualanDetail::class, 'produk_id');
     }
 }

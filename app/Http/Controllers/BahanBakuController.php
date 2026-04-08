@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BahanBaku;
-use App\Models\Supplier;
+use App\Models\admin\BahanBaku;
+use App\Models\admin\Supplier;
 use Illuminate\Http\Request;
 
 class BahanBakuController extends Controller
