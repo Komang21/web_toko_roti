@@ -18,7 +18,7 @@ class PenjualanController extends Controller
 
     public function create()
     {
-        $produks = Produk::has('stok > 0')->get(); // Only in-stock
+$produks = \App\Models\admin\Produk::where('stok', '>', 0)->get();
         return view('penjualan.create', compact('produks'));
     }
 

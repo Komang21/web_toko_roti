@@ -40,7 +40,7 @@
                     <th class="border p-2">Aksi</th>
                 </tr>
             </thead>
-            <tbody id="details-tbody">
+
                 <tr class="detail-row">
                     <td class="border p-2">
                         <select name="bahan_id[]" class="form-control" required>
@@ -81,8 +81,61 @@
 </div>
 
 <script>
-// Same JS as create.blade.php
 let rowIndex = 1;
+document.getElementById('add-row').addEventListener('click', function() {
+    const tbody = document.getElementById('details-tbody');
+    const newRow = tbody.insertRow();
+    newRow.className = 'detail-row';
+    newRow.innerHTML = `
+        <td class="border p-2">
+            <select name="bahan_id[]" class="form-control" required>
+                <option value="">Pilih Bahan</option>
+                @foreach ($bahanBakus as $bahan)
+                    <option value="{{ $bahan->id }}" data-harga="{{ $bahan->harga }}">{{ $bahan->nama }}</option>
+                @endforeach
+            </select>
+        </td>
+        <td class="border p-2">
+            <input type="number" name="qty[]" min="1" class="form-control qty" required>
+        </td>
+        <td class="border p-2">
+            <input type="number" name="harga[]" step="0.01" class="form-control harga" required>
+        </td>
+        <td class="border p-2 subtotal">Rp 0</td>
+        <td class="border p-2">
+            <button type="button" class="remove-row bg-red-500 text-white px-2 py-1 rounded">Hapus</button>
+        </td>
+    `;
+    rowIndex++;
+});
+
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('qty') || e.target.classList.contains('harga')) {
+        const row = e.target.closest('tr');
+        const qty = parseFloat(row.querySelector('.qty').value) || 0;
+        const harga = parseFloat(row.querySelector('.harga').value) || 0;
+        row.querySelector('.subtotal').textContent = 'Rp ' + (qty * harga).toLocaleString('id-ID');
+        calculateTotal();
+    } else if (e.target.classList.contains('bahan_id')) {
+        const harga = e.target.options[e.target.selectedIndex].dataset.harga;
+        e.target.closest('tr').querySelector('.harga').value = harga || '';
+        calculateTotal();
+    }
+});
+
+function calculateTotal() {
+    let total = 0;
+    document.querySelectorAll('.subtotal').forEach(sub => {
+        const val = sub.textContent.replace(/[^0-9]/g, '');
+        total += parseFloat(val) || 0;
+    });
+    document.getElementById('grand-total').textContent = total.toLocaleString('id-ID');
+}
+
+document.querySelectorAll('.remove-row').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.closest('tr').remove();
+        calculateTotal();
 document.getElementById('add-row').addEventListener('click', function() {
     // ... same as pembelian/create JS
 });

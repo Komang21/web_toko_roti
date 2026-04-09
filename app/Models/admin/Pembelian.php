@@ -3,8 +3,8 @@
 namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\PembelianDetail;
-use App\Models\Supplier;
+use App\Models\admin\PembelianDetail;
+use App\Models\admin\Supplier;
 
 class Pembelian extends Model
 {
@@ -26,6 +26,6 @@ class Pembelian extends Model
 
     public function details()
     {
-        return $this->hasMany(PembelianDetail::class);
+        return $this->hasMany(\App\Models\admin\PembelianDetail::class);
     }
 }

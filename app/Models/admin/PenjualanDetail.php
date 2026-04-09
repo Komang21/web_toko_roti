@@ -3,8 +3,6 @@
 namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Penjualan;
-use App\Models\Produk;
 
 class PenjualanDetail extends Model
 {
@@ -23,12 +21,12 @@ class PenjualanDetail extends Model
 
     public function penjualan()
     {
-        return $this->belongsTo(Penjualan::class);
+        return $this->belongsTo(\App\Models\admin\Penjualan::class);
     }
 
     public function produk()
     {
-        return $this->belongsTo(Produk::class, 'produk_id');
+        return $this->belongsTo(\App\Models\admin\Produk::class, 'produk_id');
     }
 }
 ?>

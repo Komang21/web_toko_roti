@@ -3,8 +3,6 @@
 namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Pembelian;
-use App\Models\BahanBaku;
 
 class PembelianDetail extends Model
 {
@@ -23,12 +21,12 @@ class PembelianDetail extends Model
 
     public function pembelian()
     {
-        return $this->belongsTo(Pembelian::class);
+        return $this->belongsTo(\App\Models\admin\Pembelian::class);
     }
 
     public function bahan()
     {
-        return $this->belongsTo(BahanBaku::class, 'bahan_id');
+        return $this->belongsTo(\App\Models\admin\BahanBaku::class, 'bahan_id');
     }
 }
 ?>

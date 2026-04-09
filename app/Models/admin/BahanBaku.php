@@ -23,7 +23,7 @@ protected $table = 'bahan_bakus';
 
     public function supplier()
     {
-        return $this->belongsTo(Supplier::class);
+return $this->belongsTo(\App\Models\admin\Supplier::class);
     }
 
     public function pembelianDetails()

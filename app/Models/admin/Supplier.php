@@ -3,7 +3,7 @@
 namespace App\Models\admin;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Pembelian;
+use App\Models\admin\Pembelian;
 
 
 class Supplier extends Model
@@ -16,6 +16,6 @@ class Supplier extends Model
 
     public function pembelians()
     {
-        return $this->hasMany(Pembelian::class);
+return $this->hasMany(\App\Models\admin\Pembelian::class);
     }
 }
