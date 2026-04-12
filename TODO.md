@@ -1,1 +1,0 @@
-## Remaining:&#10;- 6. Verify tables&#10;- 7. Complete&#10;&#10;## Completed:&#10;- 1. Create TODO.md&#10;- 2. Update produk/index.blade.php ✅&#10;- 3. Update supplier/index.blade.php ✅&#10;- 4. Update bahan-baku/index.blade.php ✅&#10;- 5. Update pembelian/index.blade.php ✅

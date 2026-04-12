@@ -6,6 +6,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Import Model cukup satu kali di atas
@@ -18,31 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route Dashboard Tunggal
-Route::get('/dashboard', function () {
-    // 1. Ambil data asli dari database
-    $totalProduk = Produk::count();
-    $totalSupplier = Supplier::count();
-    $totalPenjualan = Penjualan::count();
-    
-    // 2. Total Pendapatan
-$totalPendapatan = Penjualan::sum('total');
-
-    // 3. Data Placeholder untuk Grafik
-    $labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
-    $dataStokMasuk = [0, 0, 0, 0, 0, 0, 0]; 
-    $dataStokKeluar = [0, 0, 0, 0, 0, 0, 0];
-
-    return view('dashboard', compact(
-        'totalProduk', 
-        'totalSupplier', 
-        'totalPenjualan', 
-        'totalPendapatan',
-        'labels',
-        'dataStokMasuk',
-        'dataStokKeluar'
-    ));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 // Grouping Middleware Auth agar lebih rapi
 Route::middleware('auth')->group(function () {

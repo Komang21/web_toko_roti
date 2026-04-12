@@ -107,10 +107,10 @@
                 new Chart(ctxLine.getContext('2d'), {
                     type: 'line',
                     data: {
-                        labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
+                        labels: @json($labels),
                         datasets: [{
                             label: 'Stok Masuk',
-                            data: [120, 190, 300, 250, 200, 350, 400],
+                            data: @json($dataStokMasuk),
                             borderColor: '#3b82f6', // Biru
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             borderWidth: 2,
@@ -118,7 +118,7 @@
                             fill: true
                         }, {
                             label: 'Stok Keluar',
-                            data: [100, 150, 200, 220, 180, 250, 300],
+                            data: @json($dataStokKeluar),
                             borderColor: '#10b981', // Hijau
                             backgroundColor: 'transparent',
                             borderWidth: 2,
@@ -139,10 +139,10 @@
                 new Chart(ctxDonut.getContext('2d'), {
                     type: 'doughnut',
                     data: {
-                        labels: ['Roti Tawar', 'Roti Manis', 'Kue Kering'],
+                        labels: @json($distribusiLabels),
                         datasets: [{
-                            data: [55, 30, 15],
-                            backgroundColor: ['#f59e0b', '#10b981', '#3b82f6'],
+                            data: @json($dataDistribusi),
+                            backgroundColor: ['#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#eab308'], // Dynamic colors
                             borderWidth: 0
                         }]
                     },
