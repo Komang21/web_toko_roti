@@ -27,6 +27,18 @@
                         @enderror
                     </div>
                     <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Kategori</label>
+                        <select name="kategori" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 @error('kategori') border-red-500 @enderror" required>
+                            <option value="">Pilih Kategori</option>
+                            @foreach($kategoris as $kategori)
+                                <option value="{{ $kategori }}" {{ old('kategori', $produk->kategori) == $kategori ? 'selected' : '' }}>{{ $kategori }}</option>
+                            @endforeach
+                        </select>
+                        @error('kategori')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">Harga Jual</label>
                         <input type="number" name="harga_jual" value="{{ old('harga_jual', $produk->harga_jual) }}" step="0.01" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 @error('harga_jual') border-red-500 @enderror" required>
                         @error('harga_jual')

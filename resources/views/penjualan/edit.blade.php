@@ -26,14 +26,14 @@
                             <div class="produk-row mb-4 p-4 border rounded flex flex-wrap gap-4 items-end">
                                 <div class="flex-1">
                                     <label>Produk</label>
-                                    <select name="produk_id[]" class="produk-select shadow border rounded w-full py-2 px-3" required>
-                                        <option value="">Pilih Produk</option>
-                                        @foreach($produks as $produk)
-                                            <option value="{{ $produk->id }}" data-harga="{{ $produk->harga_jual }}" {{ $detail->produk_id == $produk->id ? 'selected' : '' }}>
-                                                {{ $produk->nama }} (Stok: {{ $produk->stok }})
-                                            </option>
-                                        @endforeach
-                                    </select>
+                            <select name="produk_id[]" class="produk-select shadow border rounded w-full py-2 px-3" required>
+                                <option value="">Pilih Produk</option>
+                                @foreach($produks as $produk)
+                                    <option value="{{ $produk->id }}" data-harga="{{ $produk->harga_jual }}" data-stok="{{ $produk->stok }}" {{ $detail->produk_id == $produk->id ? 'selected' : '' }}>
+                                        {{ $produk->nama }} (Stok: {{ $produk->stok }})
+                                    </option>
+                                @endforeach
+                            </select>
                                 </div>
                                 <div class="w-24">
                                     <label>Qty</label>

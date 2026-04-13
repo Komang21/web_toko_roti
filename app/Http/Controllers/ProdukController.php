@@ -15,13 +15,15 @@ class ProdukController extends Controller
 
     public function create()
     {
-        return view('produk.create');
+        $kategoris = ['Roti', 'Kue', 'Pastry', 'Snak'];
+        return view('produk.create', compact('kategoris'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
+            'kategori' => 'required|string|in:Roti,Kue,Pastry,Snak',
             'harga_jual' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
         ]);
@@ -40,13 +42,15 @@ class ProdukController extends Controller
 
     public function edit(Produk $produk)
     {
-        return view('produk.edit', compact('produk'));
+        $kategoris = ['Roti', 'Kue', 'Pastry', 'Snak'];
+        return view('produk.edit', compact('produk', 'kategoris'));
     }
 
     public function update(Request $request, Produk $produk)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
+            'kategori' => 'required|string|in:Roti,Kue,Pastry,Snak',
             'harga_jual' => 'required|numeric|min:0',
             'stok' => 'required|integer|min:0',
         ]);

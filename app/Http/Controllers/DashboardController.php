@@ -14,56 +14,55 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // KPI Totals (existing)
+        // KPI Totals
         $totalProduk = Produk::count();
         $totalSupplier = Supplier::count();
         $totalPenjualan = Penjualan::count();
         $totalPendapatan = Penjualan::sum('total');
 
-        // Labels
-        $labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+        // Weekday labels (DAYOFWEEK 1=Min..7=Sab)
+        $labels = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 
-        // Trends: Last 30 days, weekly totals (sum qty per weekday)
-        $endDate = Carbon::now();
-        $startDate = $endDate->copy()->subDays(30);
+        // Current week
+        $startDate = Carbon::now()->startOfWeek();
+        $endDate = Carbon::now()->endOfWeek();
 
-        // Stok Masuk: Sum qty PembelianDetail by DAYOFWEEK(tgl_pembelian)
-        $masukRaw = Pembelian::whereBetween('tgl_pembelian', [$startDate, $endDate])
+        // Tren Stok Masuk (Pembelian qty this week)
+        $masukRaw = DB::table('pembelians')
             ->join('pembelian_details', 'pembelians.id', '=', 'pembelian_details.pembelian_id')
-            ->select(DB::raw('DAYOFWEEK(tgl_pembelian) as dayofweek'), DB::raw('SUM(pembelian_details.qty) as total_qty'))
-            ->groupBy('dayofweek')
-            ->pluck('total_qty', 'dayofweek');
-
+            ->whereBetween('pembelians.tgl_pembelian', [$startDate, $endDate])
+            ->select(DB::raw('DAYOFWEEK(pembelians.tgl_pembelian) as hari'), DB::raw('SUM(pembelian_details.qty) as total'))
+            ->groupBy('hari')
+            ->pluck('total', 'hari');
         $dataStokMasuk = [];
         for ($i = 1; $i <= 7; $i++) {
             $dataStokMasuk[] = $masukRaw->get($i, 0);
         }
 
-        // Stok Keluar: Sum qty PenjualanDetail by DAYOFWEEK(tgl_jual)
-        $keluarRaw = Penjualan::whereBetween('tgl_jual', [$startDate, $endDate])
+        // Tren Stok Keluar (Penjualan qty this week)
+        $keluarRaw = DB::table('penjualans')
             ->join('penjualan_details', 'penjualans.id', '=', 'penjualan_details.penjualan_id')
-            ->select(DB::raw('DAYOFWEEK(tgl_jual) as dayofweek'), DB::raw('SUM(penjualan_details.qty) as total_qty'))
-            ->groupBy('dayofweek')
-            ->pluck('total_qty', 'dayofweek');
-
+            ->whereBetween('penjualans.tgl_jual', [$startDate, $endDate])
+            ->select(DB::raw('DAYOFWEEK(penjualans.tgl_jual) as hari'), DB::raw('SUM(penjualan_details.qty) as total'))
+            ->groupBy('hari')
+            ->pluck('total', 'hari');
         $dataStokKeluar = [];
         for ($i = 1; $i <= 7; $i++) {
             $dataStokKeluar[] = $keluarRaw->get($i, 0);
         }
 
-        // Distribusi Pesanan: Sum qty per produk from last 30 days PenjualanDetail
-        $distribusiRaw = Penjualan::whereBetween('tgl_jual', [$startDate, $endDate])
+        // Distribusi Pesanan (produk qty)
+        $distribusiRaw = DB::table('penjualans')
             ->join('penjualan_details', 'penjualans.id', '=', 'penjualan_details.penjualan_id')
             ->join('produks', 'penjualan_details.produk_id', '=', 'produks.id')
-            ->select('produks.nama', DB::raw('SUM(penjualan_details.qty) as total_qty'))
+            ->whereBetween('penjualans.tgl_jual', [$startDate, $endDate])
+            ->select('produks.nama', DB::raw('SUM(penjualan_details.qty) as total'))
             ->groupBy('produks.id', 'produks.nama')
-            ->orderBy('total_qty', 'desc')
+            ->orderByDesc('total')
+            ->limit(7)
             ->get();
-
         $distribusiLabels = $distribusiRaw->pluck('nama')->toArray();
-        $dataDistribusi = $distribusiRaw->pluck('total_qty')->toArray();
-
-        // Fallback if no data
+        $dataDistribusi = $distribusiRaw->pluck('total')->toArray();
         if (empty($distribusiLabels)) {
             $distribusiLabels = ['No Data'];
             $dataDistribusi = [0];
@@ -76,6 +75,4 @@ class DashboardController extends Controller
         ));
     }
 }
-?>
-
 

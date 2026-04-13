@@ -33,72 +33,77 @@
             @endif
 
             {{-- Stats Dashboard --}}
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
-                <div class="bg-gradient-to-br from-indigo-500 to-blue-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-gradient-to-br from-indigo-500 to-blue-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all duration-300 animate-card group animate-pulse hover:animate-none">
                     <div class="flex items-center">
-                        <div class="p-4 bg-white/20 rounded-2xl shadow-lg">
+                        <div class="p-4 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
                             <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                             </svg>
                         </div>
                         <div class="ml-6">
                             <p class="opacity-90 text-sm font-medium">Total Pembelian</p>
-                            <p class="text-4xl font-black">{{ $pembelians->total() }}</p>
+                            <p class="text-4xl font-black animate-count-up" data-target="{{ $pembelians->total() }}">{{ number_format($pembelians->total()) }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300">
+
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all duration-300 animate-card group animate-pulse hover:animate-none">
                     <div class="flex items-center">
-                        <div class="p-4 bg-white/20 rounded-2xl shadow-lg">
+                        <div class="p-4 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
                             <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <div class="ml-6">
                             <p class="opacity-90 text-sm font-medium">Total Pengeluaran</p>
-                            <p class="text-4xl font-black">Rp {{ number_format($pembelians->sum('total'), 0, ',', '.') }}</p>
+                            <p class="text-4xl font-black animate-count-up" data-target="{{ $pembelians->sum('total') }}">Rp {{ number_format($pembelians->sum('total'), 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-br from-purple-500 to-violet-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300">
+
+                <div class="bg-gradient-to-br from-purple-500 to-violet-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all duration-300 animate-card group animate-pulse hover:animate-none">
                     <div class="flex items-center">
-                        <div class="p-4 bg-white/20 rounded-2xl shadow-lg">
+                        <div class="p-4 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
                             <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.128 0M13.407 15.672a5.002 5.001 0 0111.708 0"></path>
                             </svg>
                         </div>
                         <div class="ml-6">
                             <p class="opacity-90 text-sm font-medium">Supplier Aktif</p>
-                            <p class="text-4xl font-black">{{ \App\Models\admin\Pembelian::with('supplier')->distinct('supplier_id')->count() }}</p>
+                            <p class="text-4xl font-black animate-count-up" data-target="{{ $supplierAktif }}">{{ $supplierAktif }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gradient-to-br from-amber-500 to-orange-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300">
+
+                <div class="bg-gradient-to-br from-amber-500 to-orange-600 text-white p-6 rounded-3xl shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all duration-300 animate-card group animate-pulse hover:animate-none">
                     <div class="flex items-center">
-                        <div class="p-4 bg-white/20 rounded-2xl shadow-lg">
+                        <div class="p-4 bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg">
                             <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
                         <div class="ml-6">
                             <p class="opacity-90 text-sm font-medium">Rata-rata per Pembelian</p>
-                            <p class="text-4xl font-black">Rp {{ $pembelians->count() > 0 ? number_format($pembelians->avg('total'), 0, ',', '.') : '0' }}</p>
+                            <p class="text-4xl font-black animate-count-up" data-target="{{ $rataRata }}">Rp {{ number_format($rataRata, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- Recent Purchases --}}
-            <div class="bg-white/70 backdrop-blur-md shadow-2xl rounded-4xl border border-white/50 overflow-hidden mb-8">
+            {{-- Pembelian Terbaru Table --}}
+            <div class="bg-white/70 backdrop-blur-md shadow-2xl rounded-4xl border border-white/50 overflow-hidden">
                 <div class="p-8">
                     <div class="flex items-center justify-between mb-8">
                         <h3 class="text-2xl font-bold text-gray-800 flex items-center">
-                            <svg class="w-10 h-10 mr-4 bg-indigo-100 p-3 rounded-3xl shadow-lg text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-9 h-9 mr-4 text-indigo-500 bg-indigo-100 p-2 rounded-2xl shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                             </svg>
                             Pembelian Terbaru
                         </h3>
-                        <a href="{{ route('pembelian.index') }}" class="text-sm font-semibold text-indigo-600 hover:text-indigo-700">Lihat Semua →</a>
+                        <div class="flex gap-3">
+                            <span class="px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-200 text-sm font-semibold rounded-2xl text-gray-700 cursor-pointer hover:bg-gray-200 transition-all">Lihat Semua</span>
+                        </div>
                     </div>
 
                     <div class="overflow-x-auto rounded-3xl border border-gray-200">
@@ -106,9 +111,9 @@
                             <thead class="bg-gradient-to-r from-gray-50 to-gray-100 sticky top-0">
                                 <tr>
                                     <th class="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider w-12">#</th>
-                                    <th class="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Tanggal Beli</th>
+                                    <th class="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Tanggal</th>
                                     <th class="px-8 py-6 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Supplier</th>
-                                    <th class="px-8 py-6 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Total Bayar</th>
+                                    <th class="px-8 py-6 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Total</th>
                                     <th class="px-8 py-6 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
                                     <th class="px-8 py-6 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Aksi</th>
                                 </tr>
@@ -120,7 +125,7 @@
                                         <td class="px-8 py-6 whitespace-nowrap text-sm font-semibold text-gray-900">{{ $no }}</td>
                                         <td class="px-8 py-6 whitespace-nowrap">
                                             <div class="flex items-center">
-                                                <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-blue-500 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
+                                                <div class="w-12 h-12 bg-gradient-to-br from-indigo-400 to-blue-500 rounded-2xl flex items-center justify-center shadow-sm mr-4">
                                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                                                     </svg>
@@ -157,7 +162,7 @@
                                                     <button type="submit" class="p-3 bg-red-100 hover:bg-red-200 rounded-2xl transition-all group-hover:scale-110">
                                                         <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                                        </svg>
+                                                    </svg>
                                                     </button>
                                                 </form>
                                             </div>
@@ -192,12 +197,48 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="mt-16 flex justify-center">
-                        {{ $pembelians->appends(request()->query())->links() }}
-                    </div>
                 </div>
+            </div>
+
+            <div class="mt-16 flex justify-center">
+                {{ $pembelians->appends(request()->query())->links() }}
             </div>
         </div>
     </div>
+
+    <script>
+        // Count up animation
+        const animateCounters = () => {
+            document.querySelectorAll('.animate-count-up').forEach(el => {
+                const target = parseInt(el.dataset.target);
+                let current = 0;
+                const duration = 2000;
+                const step = target / (duration / 16);
+                const timer = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        el.textContent = new Intl.NumberFormat('id-ID').format(target);
+                        clearInterval(timer);
+                    } else {
+                        el.textContent = new Intl.NumberFormat('id-ID').format(Math.floor(current));
+                    }
+                }, 16);
+            });
+        };
+
+        // Scroll trigger
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.animate-card').forEach(card => observer.observe(card));
+        });
+    </script>
 </x-app-layout>
+

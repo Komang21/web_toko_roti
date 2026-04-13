@@ -45,7 +45,7 @@
             <tbody id="details-tbody">
                 <tr class="detail-row">
                     <td class="border p-2">
-                        <select name="produk_id[]" class="form-control" required>
+                        <select name="produk_id[]" class="produk-select form-control" required>
                             <option value="">Pilih Produk</option>
                             @foreach ($produks as $produk)
                                 <option value="{{ $produk->id }}" data-harga="{{ $produk->harga_jual }}" data-stok="{{ $produk->stok }}">{{ $produk->nama }} (Stok: {{ $produk->stok }})</option>
@@ -118,10 +118,12 @@ document.addEventListener('change', function(e) {
         const harga = parseFloat(row.querySelector('.harga').value) || 0;
         row.querySelector('.subtotal').textContent = 'Rp ' + (qty * harga).toLocaleString('id-ID');
         calculateTotal();
-    } else if (e.target.classList.contains('produk_id')) {
-        const harga = e.target.options[e.target.selectedIndex].dataset.harga;
-        const stok = parseInt(e.target.options[e.target.selectedIndex].dataset.stok);
-        e.target.closest('tr').querySelector('.harga').value = harga || '';
+    } else if (e.target.classList.contains('produk-select') || e.target.classList.contains('produk_id')) {
+        const select = e.target;
+        const harga = select.options[select.selectedIndex].dataset.harga;
+        const stok = parseInt(select.options[select.selectedIndex].dataset.stok);
+        const row = select.closest('tr');
+        row.querySelector('.harga').value = harga || '';
         // Warn if qty > stok
     }
 });

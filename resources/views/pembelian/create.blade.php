@@ -57,7 +57,7 @@
             <tbody id="details-tbody">
                 <tr class="detail-row">
                     <td class="border p-2">
-                        <select name="bahan_id[]" class="form-control" required>
+                        <select name="bahan_id[]" class="bahan-select form-control" required>
                             <option value="">Pilih Bahan</option>
                             @foreach ($bahanBakus as $bahan)
                                 <option value="{{ $bahan->id }}" data-harga="{{ $bahan->harga }}">{{ $bahan->nama }}</option>
@@ -130,9 +130,10 @@ document.addEventListener('change', function(e) {
         const harga = parseFloat(row.querySelector('.harga').value) || 0;
         row.querySelector('.subtotal').textContent = 'Rp ' + (qty * harga).toLocaleString('id-ID');
         calculateTotal();
-    } else if (e.target.classList.contains('bahan_id')) {
-        const harga = e.target.options[e.target.selectedIndex].dataset.harga;
-        e.target.closest('tr').querySelector('.harga').value = harga || '';
+    } else if (e.target.classList.contains('bahan-select') || e.target.classList.contains('bahan_id')) {
+        const select = e.target;
+        const harga = select.options[select.selectedIndex].dataset.harga;
+        select.closest('tr').querySelector('.harga').value = harga || '';
     }
 });
 

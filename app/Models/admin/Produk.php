@@ -7,15 +7,17 @@ use App\Models\PenjualanDetail;
 
 class Produk extends Model
 {
-    protected $fillable = [
+protected $fillable = [
         'nama',
+        'kategori',
         'harga_jual',
         'stok',
     ];
 
-    protected $casts = [
+protected $casts = [
         'harga_jual' => 'decimal:2',
         'stok' => 'integer',
+        'kategori' => 'string',
     ];
 
     public function penjualanDetails()

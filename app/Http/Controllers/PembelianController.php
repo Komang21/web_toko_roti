@@ -14,7 +14,9 @@ class PembelianController extends Controller
     public function index()
     {
         $pembelians = Pembelian::with(['supplier', 'details.bahan'])->paginate(10);
-        return view('pembelian.index', compact('pembelians'));
+        $supplierAktif = Pembelian::with('supplier')->distinct('supplier_id')->count();
+        $rataRata = $pembelians->avg('total') ?? 0;
+        return view('pembelian.index', compact('pembelians', 'supplierAktif', 'rataRata'));
     }
 
     public function create()
