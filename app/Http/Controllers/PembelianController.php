@@ -10,14 +10,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PembelianController extends Controller
-{
-    public function index()
     {
-        $pembelians = Pembelian::with(['supplier', 'details.bahan'])->paginate(10);
-        $supplierAktif = Pembelian::with('supplier')->distinct('supplier_id')->count();
-        $rataRata = $pembelians->avg('total') ?? 0;
-        return view('pembelian.index', compact('pembelians', 'supplierAktif', 'rataRata'));
-    }
+     public function index(Request $request)
+{
+    $limit = $request->get('limit') ?? 'limited';
+    
+    $pembeliansTerbaru = Pembelian::with(['supplier', 'details.bahan'])->latest()->take(5)->get();
+    
+    $pembeliansQuery = Pembelian::with(['supplier', 'details.bahan'])->latest();
+    $pembelians = ($limit === 'all') 
+        ? $pembeliansQuery->paginate(15)
+        : $pembeliansQuery->paginate(5);
+    
+    $totalPengeluaran = Pembelian::sum('total');
+    $totalPembelian = Pembelian::count();
+    $supplierAktif = Pembelian::distinct('supplier_id')->count();
+    $rataRata = Pembelian::avg('total') ?? 0;
+
+    return view('pembelian.index', compact(
+        'pembelians',
+        'pembeliansTerbaru',
+        'totalPengeluaran',
+        'totalPembelian',
+        'supplierAktif',
+        'rataRata',
+        'limit'
+    ));
+}
 
     public function create()
     {
@@ -148,4 +167,5 @@ class PembelianController extends Controller
         return redirect()->route('pembelian.index')
             ->with('success', 'Pembelian berhasil dihapus.');
     }
+    
 }

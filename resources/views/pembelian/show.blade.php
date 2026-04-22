@@ -54,11 +54,11 @@
                 </div>
 
                 <div class="mt-8 flex gap-4">
-                    <a href="{{ route('pembelian.edit', $pembelian) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded">
+                    <a href="{{ route('pembelian.edit', $pembelian) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all">
                         Edit
                     </a>
-                    <a href="{{ route('pembelian.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded">
-                        Kembali
+                    <a href="{{ route('pembelian.index', ['limit' => 'all']) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                        ← Kembali ke Lihat Semua
                     </a>
                 </div>
             </div>
