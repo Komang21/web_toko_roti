@@ -187,8 +187,12 @@
                                         </div>
                                     </td>
                                     <td class="px-8 py-6 whitespace-nowrap text-right">
-                                        <span
-                                            class="inline-flex px-4 py-2 bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 text-sm font-bold rounded-2xl shadow-md">Lunas</span>
+                                        @if($penjualan->status_pembayaran === 'lunas')
+                                            <span class="inline-flex px-4 py-2 bg-gradient-to-r from-emerald-100 to-emerald-200 text-emerald-800 text-sm font-bold rounded-2xl shadow-md">Lunas</span>
+                                        @else
+                                            <span class="inline-flex px-4 py-2 bg-gradient-to-r from-red-100 to-red-200 text-red-800 text-sm font-bold rounded-2xl shadow-md">Belum Lunas</span>
+                                        @endif
+                                    </td>
                                     <td class="px-8 py-6 whitespace-nowrap text-right">
                                         <div class="flex gap-2 justify-end">
                                             {{-- Tombol Detail --}}

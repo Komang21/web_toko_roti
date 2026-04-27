@@ -17,7 +17,7 @@ class PenjualanController extends Controller
         $totalTransaksi = Penjualan::count();
         $totalPendapatan = Penjualan::sum('total');
         $rataRata = Penjualan::avg('total') ?? 0;
-        
+
         $firstDate = Penjualan::min('tgl_jual');
         $lastDate = Penjualan::max('tgl_jual');
         $periode = 'Belum ada data';
@@ -26,7 +26,7 @@ class PenjualanController extends Controller
             $lastCarbon = new \DateTime($lastDate);
             $periode = $firstCarbon->format('d M Y') . ' - ' . $lastCarbon->format('d M Y');
         }
-        
+
         $stats = [
             ['label' => 'Total Transaksi', 'value' => $totalTransaksi, 'type' => 'number', 'icon' => 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', 'color' => 'from-indigo-500 to-blue-600'],
             ['label' => 'Total Pendapatan', 'value' => $totalPendapatan, 'type' => 'money', 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2', 'color' => 'from-emerald-500 to-teal-600'],
@@ -37,22 +37,23 @@ class PenjualanController extends Controller
     }
     public function create()
     {
-$produks = \App\Models\admin\Produk::where('stok', '>', 0)->get();
+        $produks = \App\Models\admin\Produk::where('stok', '>', 0)->get();
         return view('penjualan.create', compact('produks'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'status_pembayaran' => 'required|in:lunas,belum_lunas',
+            // ...validasi lain...
             'tgl_jual' => 'required|date',
             'produk_id' => 'required|array',
             'produk_id.*' => 'exists:produks,id',
             'qty' => 'required|array',
             'qty.*' => 'integer|min:1',
             'harga' => 'required|array',
-            'harga.*' => 'numeric|min:0',
+            'harga.*' => 'numeric|min:0',          
         ]);
-
         DB::transaction(function () use ($request) {
             $total = 0;
             foreach ($request->produk_id as $key => $produk_id) {
@@ -62,6 +63,7 @@ $produks = \App\Models\admin\Produk::where('stok', '>', 0)->get();
             $penjualan = Penjualan::create([
                 'tgl_jual' => $request->tgl_jual,
                 'total' => $total,
+                'status_pembayaran' => $request->status_pembayaran,
             ]);
 
             foreach ($request->produk_id as $key => $produk_id) {
@@ -121,6 +123,7 @@ $produks = \App\Models\admin\Produk::where('stok', '>', 0)->get();
             $penjualan->update([
                 'tgl_jual' => $request->tgl_jual,
                 'total' => $total,
+                'status_pembayaran' => $request->status_pembayaran,
             ]);
 
             foreach ($request->produk_id as $key => $produk_id) {

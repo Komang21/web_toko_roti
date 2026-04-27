@@ -11,6 +11,7 @@ return new class extends Migration
         // Add columns to produks
         Schema::table('produks', function (Blueprint $table) {
             $table->string('nama');
+            $table->string('kategori');
             $table->decimal('harga_jual', 10, 2);
             $table->integer('stok')->default(0);
         });
@@ -59,7 +60,7 @@ return new class extends Migration
         Schema::dropIfExists('penjualan_details');
         
         Schema::table('produks', function (Blueprint $table) {
-            $table->dropColumn(['nama', 'harga_jual', 'stok']);
+            $table->dropColumn(['nama', 'kategori', 'harga_jual', 'stok']);
         });
         
         Schema::table('bahan_bakus', function (Blueprint $table) {

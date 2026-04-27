@@ -21,6 +21,17 @@
                         @enderror
                     </div>
 
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Status Pembayaran</label>
+                        <select name="status_pembayaran" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 @error('status_pembayaran') border-red-500 @enderror" required>
+                            <option value="lunas" {{ old('status_pembayaran', $penjualan->status_pembayaran) == 'lunas' ? 'selected' : '' }}>Lunas</option>
+                            <option value="belum_lunas" {{ old('status_pembayaran', $penjualan->status_pembayaran) == 'belum_lunas' ? 'selected' : '' }}>Belum Lunas</option>
+                        </select>
+                        @error('status_pembayaran')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div id="produk-list">
                         @foreach($penjualan->details as $index => $detail)
                             <div class="produk-row mb-4 p-4 border rounded flex flex-wrap gap-4 items-end">

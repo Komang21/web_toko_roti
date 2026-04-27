@@ -50,6 +50,7 @@ class PembelianController extends Controller
         $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'tgl_pembelian' => 'required|date',
+            'status_pembayaran' => 'required|in:lunas,belum_lunas',
             'bahan_id' => 'required|array',
             'bahan_id.*' => 'exists:bahan_bakus,id',
             'qty' => 'required|array',
@@ -69,6 +70,7 @@ class PembelianController extends Controller
                 'tgl_pembelian' => $request->tgl_pembelian,
                 'total' => $total,
                 'supplier_id' => $request->supplier_id,
+                'status_pembayaran' => $request->status_pembayaran,
             ]);
 
             foreach ($request->bahan_id as $key => $bahan_id) {
@@ -109,6 +111,7 @@ class PembelianController extends Controller
         $request->validate([
             'supplier_id' => 'required|exists:suppliers,id',
             'tgl_pembelian' => 'required|date',
+            'status_pembayaran' => 'required|in:lunas,belum_lunas',
             'bahan_id' => 'required|array',
             'bahan_id.*' => 'exists:bahan_bakus,id',
             'qty' => 'required|array',
@@ -130,6 +133,7 @@ class PembelianController extends Controller
                 'tgl_pembelian' => $request->tgl_pembelian,
                 'total' => $total,
                 'supplier_id' => $request->supplier_id,
+                'status_pembayaran' => $request->status_pembayaran,
             ]);
 
             foreach ($request->bahan_id as $key => $bahan_id) {

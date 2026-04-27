@@ -33,6 +33,17 @@
                         @enderror
                     </div>
 
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Status Pembayaran</label>
+                        <select name="status_pembayaran" class="shadow appearance-none border rounded w-full py-2 px-3 @error('status_pembayaran') border-red-500 @enderror" required>
+                            <option value="lunas" {{ old('status_pembayaran', $pembelian->status_pembayaran) == 'lunas' ? 'selected' : '' }}>Lunas</option>
+                            <option value="belum_lunas" {{ old('status_pembayaran', $pembelian->status_pembayaran) == 'belum_lunas' ? 'selected' : '' }}>Belum Lunas</option>
+                        </select>
+                        @error('status_pembayaran')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <h3 class="text-lg font-semibold mb-4">Detail Bahan</h3>
                     <table id="details-table" class="w-full border-collapse border mb-4">
                         <thead>

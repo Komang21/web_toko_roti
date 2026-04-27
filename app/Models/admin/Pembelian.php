@@ -12,6 +12,7 @@ class Pembelian extends Model
         'tgl_pembelian',
         'total',
         'supplier_id',
+        'status_pembayaran',
     ];
 
     protected $casts = [

@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Penjualan extends Model
 {
     protected $fillable = [
-        'tgl_jual',
-        'total',
-    ];
-
+    'tgl_jual',
+    'total',
+    'status_pembayaran', // ← WAJIB TAMBAH INI
+];
     protected $casts = [
         'tgl_jual' => 'datetime',
         'total' => 'decimal:2',
